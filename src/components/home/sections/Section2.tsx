@@ -38,13 +38,13 @@ function Section2() {
 
   return (
     <div className="container1 mx-auto pt-[50px] xl:pt-[110px] text-p_black px-6">
-      <Paragraph2 className=" xl:text-[20px] mb-[50px] text-black">
+      <Paragraph2 className=" xl:text-[20px] mb-4 xl:mb-[50px] text-black">
         What we do
       </Paragraph2>
 
       <div className="grid md:grid-cols-2 gap-8 xl:gap-20">
         {/* Left Side Content */}
-        <div data-aos="fade-right" className=" space-y-[50px]">
+        <div data-aos="fade-right" className=" space-y-[15px] xl:space-y-[50px]">
           <Header3 className="text-lg font-bold text-primary green-600">
             FOR STARTUPS
           </Header3>

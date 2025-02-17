@@ -33,13 +33,13 @@ const ContactForm = () => {
 
   return (
     <div
-      className="flex justify-center text-p_green items-center- sm:py-[50px]- sm:py-[200px] min-h-screen bg-cover bg-gray-100 sm:p-4"
+      className="flex justify-center text-p_green items-center- py-[150px]- sm:py-[200px] min-h-screen bg-cover bg-gray-100 sm:p-4"
       style={{
         backgroundImage:
           "url('https://res.cloudinary.com/dipwsq5cg/image/upload/v1739796830/Rectangle_11_uwktuz.svg')",
       }}
     >
-      <div className="w-full max-w-2xl p-4 sm:p-[57px] shadow-lg bg-white bg-opacity-85 sm:rounded-[15px]">
+      <div className="w-full max-w-2xl p-4 sm:p-[57px] py-[150px] sm:py- shadow-lg bg-white bg-opacity-85 sm:rounded-[15px]">
         <Header3 className="text-center text-2xl font-bold mb-[38px]">
           Contact Form
         </Header3>

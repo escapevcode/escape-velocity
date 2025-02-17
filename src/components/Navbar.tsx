@@ -81,7 +81,6 @@ function Navbar() {
               ? "opacity-100 translate-y-0 "
               : "opacity-0 pointer-events-none- -translate-y-5  hidden "
           } ${pathname === "/" ? " sm:invisible " : " "}`}
-          // className="flex hidden invisible w-full bg-p_green py-[14px] justify-center items-center"
         >
           <div>
             <Paragraph2 className=" text-[12px] text-white sm:text-[14px] text-center w-full truncate overflow-hidden whitespace-nowrap">
@@ -92,10 +91,10 @@ function Navbar() {
         </div>
         <div
           className={` ${
-            isVisible ? "sm:border-b-2 border-p_green sm:pb-4" : "  "
+            isVisible ? "xl:border-b-2  border-p_green xl:pb-4" : "  "
           } ${pathname === "/contact-us" && isVisible ? " text-white" : " "}
 
-          container1 pt-2 flex justify-between sm:justify-center gap-[50px]    font-semibold- w-full items-center`}
+          container1 pt-2 flex justify-between xl:justify-center gap-[50px]    font-semibold- w-full items-center`}
         >
           <Link href="/" className={`flex items-center border rounded-lg `}>
             <img
@@ -167,35 +166,10 @@ function Navbar() {
               backgroundColor="bg-l_green"
               additionalClasses="border-secondary- text-black "
             />
-            {/* <SearchBar toggleMenu={toggleMenu} />
-            <CurrencySwitcher /> */}
+            
           </div>
 
-          {/* <div
-            onClick={() => toggleCart()}
-            className=" border rounded-lg p-2 cursor-pointer flex relative "
-          >
-            {" "}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="size-6 hover:scale-110 transition-transform duration-300"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
-              />
-            </svg>
-            <div className=" absolute -top-2 -right-4 bg-primary p-1 px-2 text-white text-[10px] rounded-full">
-              {cartCount > 0 ? cartCount : 0}
-            </div>
-          </div>
-
-          <CartSummary isOpen={cartOpen} onClose={() => toggleCart()} /> */}
+        
         </div>
 
         {/* mobile dropdown */}
