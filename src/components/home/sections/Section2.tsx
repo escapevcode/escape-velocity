@@ -38,7 +38,9 @@ function Section2() {
 
   return (
     <div className="container1 mx-auto pt-[50px] xl:pt-[110px] text-p_black px-6">
-      <Paragraph2 className=" xl:text-[20px] mb-[50px] text-black">What we do</Paragraph2>
+      <Paragraph2 className=" xl:text-[20px] mb-[50px] text-black">
+        What we do
+      </Paragraph2>
 
       <div className="grid md:grid-cols-2 gap-8 xl:gap-20">
         {/* Left Side Content */}
@@ -53,7 +55,7 @@ function Section2() {
             pitch decks), identifying fit-for-purpose partners, and ongoing
             investor relations support.
           </Paragraph3>
-          <button className="mt-6 px-[80px] py-[25px] border border-gray-500 rounded-[10px] text-black hover:bg-gray-100">
+          <button className="mt-6 px-[80px] hidden xl:block py-[25px] border border-gray-500 rounded-[10px] text-black hover:bg-black hover:text-white">
             <Paragraph3 className=" font-bold "> Get started</Paragraph3>
           </button>
         </div>
@@ -79,6 +81,9 @@ function Section2() {
             </div>
           ))}
         </div>
+        <button className="xl:mt-6 mt-4 xl:px-[80px]  flex w-full xl:hidden justify-center items-center py-[15px] xl:py-[25px] border border-gray-500 rounded-[10px] text-black hover:bg-black hover:text-white">
+          <Paragraph3 className=" font-bold "> Get started</Paragraph3>
+        </button>
       </div>
     </div>
   );
