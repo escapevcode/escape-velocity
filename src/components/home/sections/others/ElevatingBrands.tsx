@@ -1,4 +1,4 @@
-import { Header4, Paragraph1 } from "@/components/Text";
+import { Header4, Paragraph1, Paragraph2 } from "@/components/Text";
 import React from "react";
 
 function ElevatingBrands() {
@@ -19,11 +19,11 @@ function ElevatingBrands() {
   );
 
   return (
-    <div className=" bg-p_green text-p_black mt-[50px] sm:mt-[100px] pt-[40px] pb-[20px] relative">
-      <div className=" absolute top-[-30px] left-1/2 transform -translate-x-1/2 py-[10px] px-[24px] bg-white rounded-[100px]">  
-        <Paragraph1 className="text-center">
+    <div className=" bg-p_green text-p_black mt-[40px] sm:mt-[100px] pt-[20px] pb-[10px] xl:pt-[40px] xl:pb-[20px] relative">
+      <div className=" absolute top-[-20px] left-1/2 transform -translate-x-1/2 py-[10px] px-[24px] bg-white rounded-[100px]">  
+        <Paragraph2 className="text-center text-[10px] sm:text-[14px] ">
           We have worked with{" "}
-        </Paragraph1>
+        </Paragraph2>
       </div>
 
       <div className="slider-container3 overflow-hidden whitespace-nowrap">

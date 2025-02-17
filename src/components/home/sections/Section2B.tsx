@@ -40,13 +40,13 @@ function Section2B() {
 
   return (
     <div className="container1 mx-auto py-[50px] xl:py-[180px] text-p_black px-6">
-      <Paragraph2 className=" xl:text-[20px] mb-[50px] text-black">
+      <Paragraph2 className=" xl:text-[20px] mb-[20px] xl:mb-[50px] text-black">
         What we do
       </Paragraph2>
 
       <div className="grid md:grid-cols-2 gap-8 xl:gap-20">
         {/* Left Side Content */}
-        <div data-aos="fade-right" className=" space-y-[50px]">
+        <div data-aos="fade-right" className=" space-y-[20px] xl:space-y-[50px]">
           <Header3 className="text-lg font-bold text-primary green-600">
             FOR CAPITAL PROVIDERS{" "}
           </Header3>
@@ -55,7 +55,7 @@ function Section2B() {
             aligned startups, designing entrepreneur support programs, and
             offering market intelligence and due diligence services.
           </Paragraph3>
-          <button className="mt-6 px-[80px] py-[25px] border border-gray-500 rounded-[10px] text-black hover:bg-gray-100">
+          <button className="mt-6 px-[80px] hidden xl:block py-[25px] border border-gray-500 rounded-[10px] text-black hover:bg-black hover:text-white">
             <Paragraph3 className=" font-bold ">
               {" "}
               Book an appointment
@@ -66,9 +66,9 @@ function Section2B() {
         {/* Right Side Accordion */}
         <div data-aos="fade-left">
           {sections.map((item, index) => (
-            <div key={index} className="mb-4 border-b border-gray-300">
+            <div key={index} className="xl:mb-4 mb-2 border-b border-gray-300">
               <button
-                className="w-full text-left py-3 mb-[30px] flex justify-between items-center text-lg font-semibold"
+                className="w-full text-left py-3 mb-[10px] xl:mb-[30px] flex justify-between items-center text-lg font-semibold"
                 onClick={() => toggleSection(index)}
               >
                 <Paragraph3>{item.title}</Paragraph3>
@@ -84,6 +84,10 @@ function Section2B() {
             </div>
           ))}
         </div>
+
+        <button className="xl:mt-6 mt-4 xl:px-[80px]  flex w-full xl:hidden justify-center items-center py-[15px] xl:py-[25px] border border-gray-500 rounded-[10px] text-black hover:bg-black hover:text-white">
+          <Paragraph3 className=" font-bold "> Book an appointment</Paragraph3>
+        </button>
       </div>
     </div>
   );

@@ -96,7 +96,7 @@ export default function RootLayout({
       </Head>
       <body className=" bg-[#f1efe8]-">
         <Toaster />
-        <NetworkStatusChecker />
+        {/* <NetworkStatusChecker /> */}
 
         <Navbar />
         {children}

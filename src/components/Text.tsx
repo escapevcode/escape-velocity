@@ -31,7 +31,7 @@ export const Header1: React.FC<{
   className?: string;
 }> = ({ children, className = "" }) => (
   <h1
-    className={`text-[24px] sm:text-[64px] font-bold   ${body_Font_Medium.className} ${className}`}
+    className={`text-[34px] sm:text-[64px] font-bold   ${body_Font_Medium.className} ${className}`}
   >
     {children}
   </h1>
@@ -116,7 +116,7 @@ export const Paragraph2: React.FC<{
   className?: string;
 }> = ({ children, className = "" }) => (
   <p
-    className={`text-[14px] sm:text-[14px] leading-[24px] sm:leading-[28px]     ${body_p_regular.className} ${className}`}
+    className={`      ${body_p_regular.className} ${className}`}
   >
     {children}
   </p>

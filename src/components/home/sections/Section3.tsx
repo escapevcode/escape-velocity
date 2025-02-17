@@ -6,12 +6,13 @@ import {
   Header3,
   Header4,
   Paragraph1,
+  Paragraph2,
+  Paragraph3,
   ParagraphLink1,
 } from "@/components/Text";
 import Link from "next/link";
 import AOS from "aos";
-import ProductCard from "@/components/Products/ProductCard";
-import Button from "@/components/Button";
+
 
 
 const teamMembers = [
@@ -63,15 +64,15 @@ const Section3: React.FC<Section3Props> = ({ latestProducts }) => {
       <div className=" container1 pt-[34px] xl:pt-[50px]   text-p_black">
         <div
           data-aos="fade-up"
-          className="flex justify-center text-white items-center bg-secondary  py-[24px] xl:py-[100px]"
+          className="flex justify-center text-white items-center bg-secondary  py-[24px] xl:py-[50px]"
         >
-          <Header1>Meet the Core team</Header1>
+          <Header3>Meet the Core team</Header3>
         </div>{" "}
         <div className="pt-[50px] xl:pt-[76px] grid grid-cols-1 md:grid-cols-2 gap-8 xl:gap-[132px]">
           {teamMembers.map((member) => (
             <div
               key={member.id}
-              className="col-span-1 space-y-[50px]- text-[20px] font-medium flex flex-col"
+              className="col-span-1 space-y-[50px]- text-[20px] xl:font-medium flex flex-col"
               data-aos="fade-up"
             >
               {/* Image */}
@@ -95,13 +96,15 @@ const Section3: React.FC<Section3Props> = ({ latestProducts }) => {
                   target="_blank"
                   className=" underline"
                 >
-                  LinkedIn Profile
+                  <Paragraph2 className="text-[14px] xl:text-[20px] gray-700 mb- [38px] ">
+                    LinkedIn Profile
+                  </Paragraph2>
                 </Link>
               </div>
 
               {/* Bio Section */}
               <div className="mt-4">
-                <p className="text-gray-700 mb- [38px] ">
+                <Paragraph2 className="text-[14px] xl:text-[20px] gray-700 mb- [38px] ">
                   {member.shortBio}
                   {expandedMember === member.id && (
                     <span
@@ -111,12 +114,12 @@ const Section3: React.FC<Section3Props> = ({ latestProducts }) => {
                       {member.fullBio}
                     </span>
                   )}
-                </p>
+                </Paragraph2>
 
                 {/* Toggle Button */}
                 <button
                   onClick={() => toggleReadMore(member.id)}
-                  className="mt-4 font-bold  text-black hover:bg-gray-100 transition-all duration-300"
+                  className="mt-4 font-medium  text-[14px]  xl:text-[16px] text-black hover:border-b transition-all duration-300"
                 >
                   {expandedMember === member.id ? "Show Less" : "Read More..."}
                 </button>

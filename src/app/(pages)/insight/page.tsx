@@ -1,4 +1,4 @@
-import Overview from "@/components/Products/Overview";
+import Overview from "@/components/Insight/Overview";
 import React, { Suspense } from "react";
 
 function Products() {

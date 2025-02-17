@@ -29,7 +29,7 @@ const Button: React.FC<ButtonProps> = ({
   disabled,
   href,
   color = "text-white-",
-  border = "border",
+  border = "border-",
   backgroundColor = "bg-l_green",
   isLink = false,
   additionalClasses = "",

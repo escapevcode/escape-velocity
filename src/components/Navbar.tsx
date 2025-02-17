@@ -12,11 +12,8 @@ import {
   ParagraphLink2,
 } from "./Text";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
-import CartSummary from "./Cart/CartSummary";
 import useCartStore, { useCartCount } from "@/stores/cartStore";
-import SearchBar from "./SearchBar";
-import CurrencySwitcher from "./CurrencySwitcher";
+
 
 function Navbar() {
   const pathname = usePathname();
@@ -26,7 +23,7 @@ function Navbar() {
   const toggleCart = useCartStore((state) => state.toggleCart);
   const cartOpen = useCartStore((state) => state.cartOpen);
 
-   const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,15 +54,27 @@ function Navbar() {
 
   return (
     <div
-      className={
-        ["/contact-us", "/privacy-policy", "/terms-of-service"].includes(
-          pathname
-        )
-          ? " pt-[64px]- bg-secondary  fixed flex w-full z-20 pb-[8px] "
-          : "  pb-[8px] bg-secondary pt-[64px]-  fixed flex w-full z-20"
-      }
+      className={`
+    ${
+      [
+        "/contact-us",
+        "/privacy-policy",
+        "/insight",
+        "/resources",
+        "/terms-of-service",
+      ].includes(pathname)
+        ? "  xl:text-black text-white fixed flex w-full z-20 pb-[8px]"
+        : "pb-[8px] bg-secondary  fixed flex w-full text-white z-20"
+    }
+    ${
+      isVisible
+        ? " xl:bg-transparent bg-secondary"
+        : "  xl:bg-gray-100 bg-secondary"
+    }
+     ${pathname === "/" ? " xl:bg-secondary " : " "}
+  `}
     >
-      <div className=" flex flex-col  w-full text-white">
+      <div className=" flex flex-col  w-full ">
         <div
           className={` w-full px-4 sm:px-o mb-2  bg-p_green py-[14px] justify-center items-center transition-all duration-500 ${
             isVisible
@@ -75,18 +84,24 @@ function Navbar() {
           // className="flex hidden invisible w-full bg-p_green py-[14px] justify-center items-center"
         >
           <div>
-            <Paragraph1>
+            <Paragraph2 className=" text-[12px] text-white sm:text-[14px] text-center w-full truncate overflow-hidden whitespace-nowrap">
               Get access to insights in the VC space for free and stay updated
               here
-            </Paragraph1>
+            </Paragraph2>
           </div>
         </div>
-        <div className=" container1 pt-2 flex justify-between sm:justify-center gap-[50px] sm:border-b-2 border-p_green sm:pb-4 font-semibold- w-full items-center">
-          <Link href="/" className="flex items-center border rounded-lg p-2">
+        <div
+          className={` ${
+            isVisible ? "sm:border-b-2 border-p_green sm:pb-4" : "  "
+          } ${pathname === "/contact-us" && isVisible ? " text-white" : " "}
+
+          container1 pt-2 flex justify-between sm:justify-center gap-[50px]    font-semibold- w-full items-center`}
+        >
+          <Link href="/" className={`flex items-center border rounded-lg `}>
             <img
               src="/images/logo.svg"
               alt=""
-              className="h-[31px] xl:flex hidden-"
+              className="xl:h-[51px] h-[41px] xl:flex hidden-"
             />
           </Link>
           <div className="lg:hidden">
@@ -98,7 +113,7 @@ function Navbar() {
                     : "https://res.cloudinary.com/dipwsq5cg/image/upload/v1739309674/menu_fmwnnr.png"
                 }
                 alt="menu"
-                className=" w-[24px] h-[24px] "
+                className=" xl:w-[24px] w-[21px] xl:h-[24px] "
               />
             </button>
           </div>
@@ -112,18 +127,18 @@ function Navbar() {
                 Home
               </ParagraphLink1>
             </Link>
-            <Link href="/products">
+            <Link href="/insight">
               {" "}
               <ParagraphLink1
                 className={
-                  pathname === "/products" ? "border-b border-primary " : "  "
+                  pathname === "/insight" ? "border-b border-primary " : "  "
                 }
               >
                 Insight
               </ParagraphLink1>
             </Link>
 
-            <Link href="/about-us">
+            <Link href="#" className=" cursor-not-allowed ">
               {" "}
               <ParagraphLink1
                 className={
@@ -134,11 +149,11 @@ function Navbar() {
               </ParagraphLink1>
             </Link>
 
-            <Link href="/blog">
+            <Link href="/resources">
               {" "}
               <ParagraphLink1
                 className={
-                  pathname === "/blog" ? "border-b border-primary " : "  "
+                  pathname === "/resources" ? "border-b border-primary " : "  "
                 }
               >
                 Resources
@@ -149,8 +164,8 @@ function Navbar() {
               text="Contact us"
               href="/contact-us"
               isLink={true}
-              border=" bg-primary "
-              additionalClasses="border-secondary text-black "
+              backgroundColor="bg-l_green"
+              additionalClasses="border-secondary- text-black "
             />
             {/* <SearchBar toggleMenu={toggleMenu} />
             <CurrencySwitcher /> */}
@@ -194,17 +209,21 @@ function Navbar() {
                   Home
                 </ParagraphLink1>
               </Link>
-              <Link href="/products" onClick={toggleMenu}>
+              <Link href="/insight" onClick={toggleMenu}>
                 {" "}
                 <ParagraphLink1
                   className={
-                    pathname === "/products" ? "text-primary font-bold " : "  "
+                    pathname === "/insight" ? "text-primary font-bold " : "  "
                   }
                 >
                   Insight
                 </ParagraphLink1>
               </Link>
-              <Link href="/about-us" onClick={toggleMenu}>
+              <Link
+                href="#"
+                className="cursor-not-allowed"
+                onClick={toggleMenu}
+              >
                 {" "}
                 <ParagraphLink1
                   className={
@@ -215,11 +234,11 @@ function Navbar() {
                 </ParagraphLink1>
               </Link>
 
-              <Link href="/blog" onClick={toggleMenu}>
+              <Link href="/resources" onClick={toggleMenu}>
                 {" "}
                 <ParagraphLink1
                   className={
-                    pathname === "/blog" ? "text-primary font-bold " : "  "
+                    pathname === "/resources" ? "text-primary font-bold " : "  "
                   }
                 >
                   Resources
@@ -229,8 +248,9 @@ function Navbar() {
                 text="Contact us"
                 href="/contact-us"
                 isLink={true}
-                border=" bg-primary "
-                additionalClasses="border-secondary text-black "
+                border="  "
+                backgroundColor="bg-l_green"
+                additionalClasses="border-secondary- text-black "
               />
               {/* <CurrencySwitcher />
               <SearchBar toggleMenu={toggleMenu} /> */}

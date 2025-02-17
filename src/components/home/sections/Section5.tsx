@@ -41,8 +41,8 @@ function NewsLetter() {
               startup ecosystem.
             </Paragraph2>
 
-            <div className="px-[24px] py-[18px]  flex justify-between  text-[14px] bg-secondary rounded-[10px] mt-4 overflow-hidden">
-              <div className=" flex items-center gap-2">
+            <div className="px-[24px] py-[18px]  flex flex-col xl:flex-row justify-between  text-[14px] bg-secondary rounded-[10px] mt-4 overflow-hidden">
+              <div className=" flex items-center gap-2 py-2 mb-4 xl:mb-0">
                 <img
                   src="https://res.cloudinary.com/dipwsq5cg/image/upload/v1739301642/dashicons_email-alt_xjhnm6.svg"
                   alt=""
@@ -57,10 +57,10 @@ function NewsLetter() {
               </div>
 
               <button
-                className="p-2 px-4 bg-l_green rounded-[10px]"
+                className="p-2  font-bold bg-l_green rounded-[10px] hover:bg-black hover:text-white"
                 onClick={handleSubscribe}
               >
-                Join the waitlist
+                <Paragraph2>Join the waitlist</Paragraph2>
               </button>
             </div>
           </div>

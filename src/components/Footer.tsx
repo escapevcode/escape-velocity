@@ -22,7 +22,7 @@ function Footer() {
   return (
     <div
       className={
-        ["/products", "/blog"].includes(pathname)
+        ["/insight-", "/resources-"].includes(pathname)
           ? "bg-bg_gray hidden sm:py-[100px]-"
           : " bg-white sm:py-[100px]-"
       }
@@ -82,11 +82,11 @@ function Footer() {
                   Insight
                 </ParagraphLink2>
               </Link>
-              <Link href="/products">
+              <Link href="/insight">
                 {" "}
                 <ParagraphLink2
                   className={
-                    pathname === "/products"
+                    pathname === "/insight"
                       ? "text-[#ECECEC]- font-bold- "
                       : " text-[#ECECEC]- "
                   }
@@ -94,11 +94,11 @@ function Footer() {
                   OTIK (Coming Soon)
                 </ParagraphLink2>
               </Link>
-              <Link href="/blogs">
+              <Link href="/resourcess">
                 {" "}
                 <ParagraphLink2
                   className={
-                    pathname === "/blogs"
+                    pathname === "/resourcess"
                       ? "text-[#ECECEC]- font-bold- "
                       : " text-[#ECECEC]- "
                   }
@@ -157,13 +157,13 @@ function Footer() {
                   Insight{" "}
                 </ParagraphLink2>
               </Link>
-              <Link href="/products">
+              <Link href="/insight">
                 {" "}
                 <ParagraphLink2 className=" text-[#ECECEC]- ">
                   OTIK (Coming Soon)
                 </ParagraphLink2>
               </Link>
-              <Link href="/blog">
+              <Link href="/resources">
                 {" "}
                 <ParagraphLink2 className=" text-[#ECECEC]- ">
                   Resources
