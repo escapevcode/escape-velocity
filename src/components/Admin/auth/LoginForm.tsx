@@ -30,7 +30,7 @@ function LoginForm() {
         className="bg-white p-6 rounded-lg shadow-md max-w-[1200px] "
       >
         <div className=" grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <div className=" col-span-1 hidden xl:block">
+          <div className=" col-span-1 hidden xl:block bg-secondary p-6 rounded-lg">
             {" "}
             <div className=" flex relative items-center justify-center h-full ">
               {" "}
@@ -46,7 +46,7 @@ function LoginForm() {
             {" "}
             <Header3 className=" mb-2">Hello Admin!</Header3>
             <Paragraph1 className=" font-bold- mb-6">
-              Login to your dashboard to see new orders and form submissions.
+              Login to your dashboard to see form submissions.
             </Paragraph1>
             <div className=" flex flex-col gap-[18px] ">
               <div>

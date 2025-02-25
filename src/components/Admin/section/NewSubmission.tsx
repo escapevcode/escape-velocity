@@ -15,8 +15,6 @@ import { db } from "@/lib/firebase"; // Firestore setup
 import { collection, getDocs, updateDoc, doc } from "firebase/firestore"; // Firestore functions
 import AOS from "aos";
 import SearchBar from "../navBar/SearchBar";
-import SummaryBlocks from "./SummaryBlocks";
-import NewOrders from "./NewOrders";
 
 type Submission = {
   id: string;
@@ -212,8 +210,8 @@ function NewSubmission() {
     <div className=" bg-bg_gray min-h-screen pb-[100px] text-[14px] sm:text-[14px] md:text-[16px] lg:text-[18px] xl:text-[19px] 2xl:text-[20px]">
       <div className="mx- lg:mx-0">
         <div className="container1  pt-[100px] xl:pt-[104px] pb-[24px] ">
-          <SummaryBlocks />
-          <div className="grid- hidden grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+          {/* <SummaryBlocks /> */}
+          <div className="grid hidden- grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
             <div className=" col-span-1">
               {" "}
               <div className=" w-full bg-white rounded-lg p-4">
@@ -233,11 +231,8 @@ function NewSubmission() {
           </div>
 
           <div className=" grid grid-cols-1 sm:grid-cols-5 gap-4">
-            <div className=" sm:col-span-3">
-              {" "}
-              <NewOrders />
-            </div>
-            <div className=" sm:col-span-2">
+           
+            <div className=" col-span-5">
               <div className="mx-4- xl:mx-0 ">
                 <div className="  bg-white py-[35px] p  rounded-lg shadow-md">
                   <div className="px-2  xl:px-4">

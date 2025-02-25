@@ -36,9 +36,9 @@ function NavBar() {
             <Profile />
           </div>
 
-          <div className=" hidden sm:flex">
+          {/* <div className=" hidden sm:flex">
             <ExchangeRateComponent />
-          </div>
+          </div> */}
 
           <div className="xl:hidden z-[999] flex">
             <button onClick={toggleMenu} className="focus:outline-none">
@@ -66,9 +66,9 @@ function NavBar() {
                 <Profile />
               </div>
 
-              <div className="w-full text-left border rounded-[8px] px-2 py-2 flex gap-2 text-gray-700 hover:bg-bg_gray">
+              {/* <div className="w-full text-left border rounded-[8px] px-2 py-2 flex gap-2 text-gray-700 hover:bg-bg_gray">
                 <ExchangeRateComponent />
-              </div>
+              </div> */}
 
               <button
                 onClick={handleSignOut}
