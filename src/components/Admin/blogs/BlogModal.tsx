@@ -23,16 +23,20 @@ type BlogValues = {
   blogImageURL1: string;
   blogImagePublicId1: string;
   description: string;
+  insights: boolean;
+  resources: boolean;
 };
 
 const BlogModal: React.FC<ModalProps> = ({ blog, onClose }) => {
   const [isloading, setIsLoading] = useState(false);
 
   const initialValues: BlogValues = {
-    title: blog?.title || "", 
+    title: blog?.title || "",
     blogImageURL1: blog?.blogImageURL1 || "",
     blogImagePublicId1: blog?.blogImagePublicId1 || "",
     description: blog?.description || "",
+    insights: blog?.insights || "",
+    resources: blog?.resources || "",
   };
 
 
@@ -52,7 +56,7 @@ const BlogModal: React.FC<ModalProps> = ({ blog, onClose }) => {
   ) => {
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("upload_preset", "e-shop");
+    formData.append("upload_preset", "cover_images");
 
     try {
       setIsLoading(true);
@@ -83,7 +87,7 @@ const BlogModal: React.FC<ModalProps> = ({ blog, onClose }) => {
 
       // Upload the new image
       const response = await fetch(
-        "https://api.cloudinary.com/v1_1/dtipo8fg3/image/upload",
+        `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
         {
           method: "POST",
           body: formData,
@@ -139,7 +143,7 @@ const BlogModal: React.FC<ModalProps> = ({ blog, onClose }) => {
             <div className="animate-spin rounded-full h-[100px] w-[100px] border-t-2 border-b-2 border-primary"></div>
           </div>
         )}
-        <Header5 className="text-xl font-bold mb-4">Blog Post</Header5>
+        <Header5 className="text-xl font-bold mb-4">Resource Post</Header5>
         <div className="space-y-4 max-h-[400px] overflow-hidden overflow-y-auto scrollbar-hide">
           <Formik
             initialValues={initialValues}
@@ -155,7 +159,7 @@ const BlogModal: React.FC<ModalProps> = ({ blog, onClose }) => {
                   <Field
                     name="title"
                     type="text"
-                    placeholder="Enter blog title"
+                    placeholder="Enter resource title"
                     className="w-full outline-none border-primary border p-2 rounded-lg my-2"
                   />
                   <ErrorMessage
@@ -189,10 +193,10 @@ const BlogModal: React.FC<ModalProps> = ({ blog, onClose }) => {
 
                     <label
                       htmlFor="image-upload-1"
-                      className="h-[150px] w-full bg-bg_gray rounded-lg flex items-center justify-center cursor-pointer"
+                      className="h-[150px] w-full border border-primary bg-bg_gray rounded-lg flex items-center justify-center cursor-pointer"
                     >
                       {!values.blogImageURL1 ? (
-                        <span className="text-2xl text-gray-500">+</span> // Show plus sign if no image
+                        <span className="text-2xl text-gray-500 ">+</span> // Show plus sign if no image
                       ) : (
                         <div className="h-[150px] object-cover w-full bg-bg_gray rounded-lg overflow-hidden">
                           <img
@@ -208,19 +212,27 @@ const BlogModal: React.FC<ModalProps> = ({ blog, onClose }) => {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
-                    Blog Detail
+                    Resource URL
                   </label>
                   <Field
-                    as="textarea"
+                    type="text"
                     name="description"
-                    placeholder="Enter Blog Detail"
-                    className="w-full outline-none h-[700px] border-primary border p-2 rounded-lg my-2"
+                    placeholder="Enter Resource URL"
+                    className="w-full outline-none h-[700px]- border-primary border p-2 rounded-lg my-2"
                   />
                   <ErrorMessage
                     name="description"
                     component="div"
                     className="text-red-500 text-[12px]"
                   />
+                </div>
+                <div className="flex items-center gap-2 my-2">
+                  <Field type="checkbox" name="insights" />
+                  <label>Insights</label>
+                </div>
+                <div className="flex items-center gap-2 my-2">
+                  <Field type="checkbox" name="resources" />
+                  <label>Resources</label>
                 </div>
                 <div className="mt-6 flex justify-end space-x-3">
                   <button

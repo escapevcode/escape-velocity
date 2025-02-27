@@ -11,66 +11,42 @@ import { collection, getDocs } from "firebase/firestore"; // Firestore methods
 import Section5 from "./sections/Section5";
 import Section4 from "./sections/Section4";
 
-interface Product {
+interface Blog {
   id: string;
-  name: string;
-  currentPrice: number;
-  isFeatured: boolean;
-  createdAt: Date;
-  productImageURL1: string;
-  category: string;
-  selectedCategory: any;
-  isTrending: any;
+  title: string;
+  content: string;
+  createdAt: any;
+  resources: boolean;
 }
 
 function Overview() {
-  const [loading, setLoading] = useState(true);
-  const [products, setProducts] = useState<Product[]>([]);
-  const [displayedProducts, setDisplayedProducts] = useState<Product[]>([]);
-  const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
-  const [trendingProducts, setTrendingProducts] = useState<Product[]>([]);
-  const [latestProducts, setLatestProducts] = useState<Product[]>([]);
+  const [latestBlogs, setLatestBlogs] = useState<Blog[]>([]);
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchBlogs = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, "products"));
-        const productsData = querySnapshot.docs.map((doc) => {
+        const querySnapshot = await getDocs(collection(db, "blogs"));
+        const blogsData = querySnapshot.docs.map((doc) => {
           const data = doc.data();
           return {
             id: doc.id,
             ...data,
-            createdAt: data.createdAt ? data.createdAt.toDate() : new Date(), // Convert Firestore Timestamp to Date
-          };
-        }) as Product[];
+            createdAt: data.createdAt?.toDate?.() || new Date(),
+          } as Blog;
+        });
 
-        setProducts(productsData);
+        // Filter blogs with resources = true and sort by latest
+        const filteredBlogs = blogsData
+          .filter((blog) => blog.resources === true)
+          .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+          .slice(0, 3);
 
-        // Featured products
-        setFeaturedProducts(
-          productsData.filter((product) => product.isFeatured)
-        );
-
-        // Trending products
-        setTrendingProducts(
-          productsData.filter((product) => product.isTrending)
-        );
-
-        // Latest products
-        setLatestProducts(
-          productsData.sort(
-            (a, b) => b.createdAt.getTime() - a.createdAt.getTime()
-          )
-        );
-
-        setDisplayedProducts(productsData); // Default: show all products
+        setLatestBlogs(filteredBlogs);
       } catch (error) {
-        console.error("Error fetching products:", error);
-      } finally {
-        setLoading(false);
+        console.error("Error fetching blogs:", error);
       }
     };
-    fetchProducts();
+    fetchBlogs();
   }, []);
 
   return (
@@ -78,9 +54,8 @@ function Overview() {
       <HeroSection />
       <Section2 />
       <Section2B />
-      <Section3 latestProducts={latestProducts} />
-      <Section4 latestProducts={latestProducts} />
-
+      <Section3 />
+      <Section4 latestBlogs={latestBlogs} />
       <Section5 />
       <Section6 />
     </div>

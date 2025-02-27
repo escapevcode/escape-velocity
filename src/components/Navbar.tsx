@@ -166,10 +166,7 @@ function Navbar() {
               backgroundColor="bg-l_green"
               additionalClasses="border-secondary- text-black "
             />
-            
           </div>
-
-        
         </div>
 
         {/* mobile dropdown */}
@@ -222,6 +219,7 @@ function Navbar() {
                 text="Contact us"
                 href="/contact-us"
                 isLink={true}
+                onClick={toggleMenu}
                 border="  "
                 backgroundColor="bg-l_green"
                 additionalClasses="border-secondary- text-black "

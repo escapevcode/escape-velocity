@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { Header3, Paragraph2, Paragraph3 } from "@/components/Text";
+import { motion } from "framer-motion";
 
 function Section2B() {
   useEffect(() => {
@@ -46,7 +47,10 @@ function Section2B() {
 
       <div className="grid md:grid-cols-2 gap-8 xl:gap-20">
         {/* Left Side Content */}
-        <div data-aos="fade-right" className=" space-y-[20px] xl:space-y-[50px]">
+        <div
+          data-aos="fade-right"
+          className=" space-y-[20px] xl:space-y-[50px]"
+        >
           <Header3 className="text-lg font-bold text-primary green-600">
             FOR CAPITAL PROVIDERS{" "}
           </Header3>
@@ -66,9 +70,9 @@ function Section2B() {
         {/* Right Side Accordion */}
         <div data-aos="fade-left">
           {sections.map((item, index) => (
-            <div key={index} className="xl:mb-4 mb-2 border-b border-gray-300">
+            <div key={index} className="mb-4 border-b border-gray-300">
               <button
-                className="w-full text-left py-3 mb-[10px] xl:mb-[30px] flex justify-between items-center text-lg font-semibold"
+                className="w-full text-left py-3 mb-[30px] flex justify-between items-center text-lg font-semibold"
                 onClick={() => toggleSection(index)}
               >
                 <Paragraph3>{item.title}</Paragraph3>
@@ -76,11 +80,21 @@ function Section2B() {
                   {openSection === index ? "-" : "+"}
                 </span>
               </button>
-              {openSection === index && (
-                <Paragraph3 className="my-[30px] text-gray-600">
+
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={
+                  openSection === index
+                    ? { height: "auto", opacity: 1 }
+                    : { height: 0, opacity: 0 }
+                }
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="overflow-hidden"
+              >
+                <Paragraph3 className="mb-[30px] text-gray-600">
                   {item.content}
                 </Paragraph3>
-              )}
+              </motion.div>
             </div>
           ))}
         </div>

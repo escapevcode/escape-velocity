@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { Header3, Paragraph2, Paragraph3 } from "@/components/Text";
+import { motion } from "framer-motion";
+
 
 function Section2() {
   useEffect(() => {
@@ -44,7 +46,10 @@ function Section2() {
 
       <div className="grid md:grid-cols-2 gap-8 xl:gap-20">
         {/* Left Side Content */}
-        <div data-aos="fade-right" className=" space-y-[15px] xl:space-y-[50px]">
+        <div
+          data-aos="fade-right"
+          className=" space-y-[15px] xl:space-y-[50px]"
+        >
           <Header3 className="text-lg font-bold text-primary green-600">
             FOR STARTUPS
           </Header3>
@@ -73,11 +78,21 @@ function Section2() {
                   {openSection === index ? "-" : "+"}
                 </span>
               </button>
-              {openSection === index && (
-                <Paragraph3 className="my-[30px] text-gray-600">
+
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={
+                  openSection === index
+                    ? { height: "auto", opacity: 1 }
+                    : { height: 0, opacity: 0 }
+                }
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="overflow-hidden"
+              >
+                <Paragraph3 className="mb-[30px] text-gray-600">
                   {item.content}
                 </Paragraph3>
-              )}
+              </motion.div>
             </div>
           ))}
         </div>

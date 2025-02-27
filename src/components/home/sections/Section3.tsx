@@ -12,8 +12,7 @@ import {
 } from "@/components/Text";
 import Link from "next/link";
 import AOS from "aos";
-
-
+import { motion } from "framer-motion";
 
 const teamMembers = [
   {
@@ -40,12 +39,9 @@ const teamMembers = [
   },
 ];
 
+interface Section3Props {}
 
-interface Section3Props {
-  latestProducts: any;
-}
-
-const Section3: React.FC<Section3Props> = ({ latestProducts }) => {
+const Section3: React.FC<Section3Props> = ({}) => {
   React.useEffect(() => {
     AOS.init({
       duration: 1000,
@@ -107,12 +103,15 @@ const Section3: React.FC<Section3Props> = ({ latestProducts }) => {
                 <Paragraph2 className="text-[14px] xl:text-[20px] gray-700 mb- [38px] ">
                   {member.shortBio}
                   {expandedMember === member.id && (
-                    <span
-                      data-aos="fade-down"
-                      className="block mt-2 transition-all duration-500 ease-in-out"
+                    <motion.span
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.5, ease: "easeInOut" }}
+                      className="block mt-2 overflow-hidden"
                     >
                       {member.fullBio}
-                    </span>
+                    </motion.span>
                   )}
                 </Paragraph2>
 

@@ -12,7 +12,13 @@ import {
 } from "@/components/Text";
 import React, { useState, useEffect } from "react";
 import { db } from "@/lib/firebase"; // Firestore setup
-import { collection, getDocs, updateDoc, doc } from "firebase/firestore"; // Firestore functions
+import {
+  collection,
+  getDocs,
+  updateDoc,
+  getDoc,
+  doc,
+} from "firebase/firestore"; // Firestore functions
 import AOS from "aos";
 import SearchBar from "../navBar/SearchBar";
 
@@ -20,24 +26,24 @@ type Submission = {
   id: string;
   initials: string;
   name: string;
-  firstName: string;
-  secondName: string;
   email: string;
-  phoneNumber: string;
-  location: string;
-  productDetail: string;
-  aboutushow: string;
-  contact_methods: string[];
-  services_needed: string[];
+  companyName: string;
+  description: string;
+  sector?: string; // Only for startups
+  stage?: string; // Only for startups
+  raisingIn3Months?: string; // Only for startups
+  currentNeeds: string;
+  investmentFocus?: string; // Only for capital providers
+  website?: string; // Only for capital providers
+  contactMethod?: string; // Only for capital providers
   viewed: boolean;
   timestamp: string;
+  type: "startup" | "capital-Provider"; // Identifies the type of submission
 };
 
 function NewSubmission() {
-  const [submissions, setSubmissions] = useState<Submission[]>([]);
-  const [filteredSubmissions, setFilteredSubmissions] = useState<Submission[]>(
-    []
-  );
+  const [submissions, setSubmissions] = useState<any[]>([]);
+  const [filteredSubmissions, setFilteredSubmissions] = useState<any[]>([]);
 
   const [selectedSubmission, setSelectedSubmission] =
     useState<Submission | null>(null);
@@ -56,37 +62,48 @@ function NewSubmission() {
           id: string;
           initials: string;
           name: string;
-          firstName: string;
-          secondName: string;
           email: string;
-          phoneNumber: string;
-          location: string;
-          productDetail: string;
-          aboutushow: string;
-          contact_methods: string[];
-          services_needed: string[];
+          companyName: string;
+          description: string;
+          sector?: string;
+          stage?: string;
+          raisingIn3Months?: string;
+          currentNeeds: string;
+          investmentFocus?: string;
+          website?: string;
+          contactMethod?: string;
           viewed: boolean;
-          timestamp: string;
+          timestamp: Date | null; // Changed from string to Date | null
+          type: "startup" | "capital-Provider";
         };
 
-        const submissionData: Submission[] = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          initials: doc.data().firstName[0] + doc.data().lastName[0], // Assuming you have firstName and lastName in your form
-          name: `${doc.data().firstName} ${doc.data().lastName}`,
-          firstName: doc.data().firstName,
-          secondName: doc.data().lastName,
-          email: doc.data().email,
-          phoneNumber: doc.data().phoneNumber,
-          location: doc.data().location,
-          productDetail: doc.data().productDetail,
-          aboutushow: doc.data().aboutushow,
-          contact_methods: doc.data().contact_methods,
-          services_needed: doc.data().services_needed,
-          viewed: doc.data().viewed || false, // Retrieve 'viewed' field, defaulting to false
-          timestamp: doc.data().timestamp
-            ? doc.data().timestamp.toDate()
-            : null,
-        }));
+        const submissionData: Submission[] = querySnapshot.docs.map((doc) => {
+          const data = doc.data();
+
+          return {
+            id: doc.id,
+            initials: data.name
+              ? data.name
+                  .split(" ")
+                  .map((n: string) => n[0]) // Explicitly define 'n' as a string
+                  .join("")
+              : "",
+            name: data.name || "Unknown",
+            email: data.email || "",
+            companyName: data.companyName || "",
+            description: data.description || "",
+            sector: data.sector || undefined,
+            stage: data.stage || undefined,
+            raisingIn3Months: data.raisingIn3Months || undefined,
+            currentNeeds: data.currentNeeds || "",
+            investmentFocus: data.investmentFocus || undefined,
+            website: data.website || undefined,
+            contactMethod: data.contactMethod || undefined,
+            viewed: data.viewed || false,
+            timestamp: data.timestamp ? data.timestamp.toDate() : null, // Ensure timestamp is a Date
+            type: data.activeForm || "startup",
+          };
+        });
 
         // Update total submissions and unread submissions count
         setTotalSubmissions(submissionData.length);
@@ -94,19 +111,17 @@ function NewSubmission() {
 
         // Sort submissions by timestamp, handling nulls
         submissionData.sort((a, b) => {
-          // @ts-ignore
-          const timeA = a.timestamp ? a.timestamp.getTime() : 0;
-          // @ts-ignore
-          const timeB = b.timestamp ? b.timestamp.getTime() : 0;
+          const timeA = a.timestamp instanceof Date ? a.timestamp.getTime() : 0;
+          const timeB = b.timestamp instanceof Date ? b.timestamp.getTime() : 0;
           return timeB - timeA;
         });
 
         setSubmissions(submissionData);
-        setFilteredSubmissions(submissionData); // Initialize filtered submissions
+        setFilteredSubmissions(submissionData);
       } catch (error) {
         console.error("Error fetching submissions: ", error);
       } finally {
-        setLoading(false); // Stop loading when data is fetched
+        setLoading(false);
       }
     };
 
@@ -124,25 +139,39 @@ function NewSubmission() {
   }
 
   const handleClick = async (submission: Submission) => {
-    // Update the viewed status in Firestore
     const submissionDocRef = doc(
       db,
       "formSubmissions",
       submission.id.toString()
-    ); // Assuming id is the Firestore document ID
+    );
 
     try {
-      await updateDoc(submissionDocRef, { viewed: true }); // Update the viewed field
-      console.log("Document updated successfully");
+      // Ensure the 'viewed' field exists before updating
+      const docSnap = await getDoc(submissionDocRef);
+
+      if (docSnap.exists()) {
+        const docData = docSnap.data();
+
+        // If 'viewed' field is missing, set it to false before updating
+        if (!("viewed" in docData)) {
+          await updateDoc(submissionDocRef, { viewed: false });
+        }
+
+        // Now, update the 'viewed' field to true
+        await updateDoc(submissionDocRef, { viewed: true });
+        console.log("Document updated successfully");
+      } else {
+        console.warn("Document does not exist");
+      }
     } catch (error) {
       console.error("Error updating document: ", error);
     }
 
-    // Set the submission as viewed
+    // Update the UI state
     const updatedSubmissions = submissions.map((sub) =>
       sub.id === submission.id ? { ...sub, viewed: true } : sub
     );
-    setSubmissions(updatedSubmissions); // Update state with viewed submission
+    setSubmissions(updatedSubmissions);
     setSelectedSubmission(submission);
 
     // Scroll to the top of the page
@@ -231,7 +260,6 @@ function NewSubmission() {
           </div>
 
           <div className=" grid grid-cols-1 sm:grid-cols-5 gap-4">
-           
             <div className=" col-span-5">
               <div className="mx-4- xl:mx-0 ">
                 <div className="  bg-white py-[35px] p  rounded-lg shadow-md">
@@ -266,7 +294,7 @@ function NewSubmission() {
                                 </span>
                               </div>
                               <div>
-                                <Header5 className="text-[23px] ">
+                                <Header5 className="text-[23px] pb-2 ">
                                   {selectedSubmission.name}
                                 </Header5>
                                 <Paragraph2 className="text-[14px] sm:-mt-2 font-semibold-">
@@ -280,214 +308,145 @@ function NewSubmission() {
                         <div className=" text-[14px] mt-[40px] space-y-[20px]">
                           {" "}
                           <div className=" px-4 sm:px-[20px] py-[20px] bg-bg_gray rounded-[15px] space-y-[10px]">
-                            <Paragraph2 className="text-[14px] text-gray-500 text-center underline-">
-                              {formatTimestamp(
-                                typeof selectedSubmission.timestamp === "string"
-                                  ? new Date(selectedSubmission.timestamp) // Convert string to Date
-                                  : selectedSubmission.timestamp // Use as is if it's already a Date object
-                              )}{" "}
-                              {/* Use the custom formatting function */}
-                            </Paragraph2>
+                            <div className=" flex justify-between items-center">
+                              <Paragraph2 className="text-[14px] text-gray-500  underline-">
+                                {formatTimestamp(
+                                  typeof selectedSubmission.timestamp ===
+                                    "string"
+                                    ? new Date(selectedSubmission.timestamp) // Convert string to Date
+                                    : selectedSubmission.timestamp // Use as is if it's already a Date object
+                                )}{" "}
+                                {/* Use the custom formatting function */}
+                              </Paragraph2>
+
+                              <Paragraph2 className="text-gray-500 uppercase">
+                                {selectedSubmission.type}
+                              </Paragraph2>
+                            </div>
                             <div className=" grid grid-cols-1 xl:grid-cols-1 items-center gap-4 sm:gap-[20px] ">
                               <div>
-                                <ParagraphLink2 className="  text-cente font-bold ">
+                                <ParagraphLink2 className=" font-bold ">
                                   First Name
                                 </ParagraphLink2>
                                 <div className=" p-4 bg-white rounded-[12px]">
-                                  <p className=" ">
-                                    {selectedSubmission.firstName}
-                                  </p>
+                                  <Paragraph2 className=" ">
+                                    {selectedSubmission.name}
+                                  </Paragraph2>
                                 </div>
                               </div>
                               <div>
-                                <ParagraphLink2 className="  text-cente font-bold ">
-                                  Last Name
-                                </ParagraphLink2>
-                                <div className=" p-4 bg-white rounded-[12px]">
-                                  <p className=" ">
-                                    {selectedSubmission.secondName}
-                                  </p>
-                                </div>
-                              </div>
-                              <div>
-                                <ParagraphLink2 className="  text-cente font-bold ">
+                                <ParagraphLink2 className=" font-bold ">
                                   E-mail address{" "}
                                 </ParagraphLink2>
                                 <div className=" p-4 bg-white rounded-[12px]">
-                                  <p className=" ">
+                                  <Paragraph2 className=" ">
                                     {selectedSubmission.email}
-                                  </p>
+                                  </Paragraph2>
                                 </div>
                               </div>
+
                               <div>
-                                <ParagraphLink2 className="  text-cente font-bold ">
-                                  Phone Number{" "}
+                                <ParagraphLink2 className=" font-bold ">
+                                  Company Name{" "}
                                 </ParagraphLink2>
                                 <div className=" p-4 bg-white rounded-[12px]">
-                                  <p className=" ">
-                                    {selectedSubmission.phoneNumber}
-                                  </p>
-                                </div>
-                              </div>
-                              <div>
-                                <ParagraphLink2 className=" font-bold">
-                                  Preferred Method of Contact
-                                </ParagraphLink2>
-                                <div className="flex w-full flex-col">
-                                  <div className="mt-[12px] flex flex-col gap-[16px]">
-                                    {Array.isArray(
-                                      selectedSubmission?.contact_methods
-                                    ) &&
-                                      selectedSubmission?.contact_methods.map(
-                                        (contact_method, index) => {
-                                          // Render specific text based on the value of `quality`
-                                          let displayText = "";
-
-                                          switch (contact_method) {
-                                            case "email":
-                                              displayText = "Email";
-                                              break;
-                                            case "phone_call":
-                                              displayText = "Phone call";
-                                              break;
-                                            case "whatsapp":
-                                              displayText = "WhatsApp";
-                                              break;
-                                            default:
-                                              displayText = "Unknown"; // Fallback text if needed
-                                          }
-
-                                          return (
-                                            <div
-                                              key={index}
-                                              className="flex items-center gap-[13px]"
-                                            >
-                                              <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                                strokeWidth={1.5}
-                                                stroke="currentColor"
-                                                className="size-6"
-                                              >
-                                                <path
-                                                  strokeLinecap="round"
-                                                  strokeLinejoin="round"
-                                                  d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                                                />
-                                              </svg>
-                                              <ParagraphLink2 className="text-center font-bold">
-                                                {displayText}
-                                              </ParagraphLink2>
-                                            </div>
-                                          );
-                                        }
-                                      )}
-                                  </div>
-                                </div>
-                              </div>
-                              <div>
-                                <ParagraphLink2 className=" font-bold">
-                                  Product Category
-                                </ParagraphLink2>
-                                <div className="flex w-full flex-col">
-                                  <div className="mt-[12px] flex flex-col gap-[16px]">
-                                    {Array.isArray(
-                                      selectedSubmission?.services_needed
-                                    ) &&
-                                      selectedSubmission.services_needed.map(
-                                        (service_needed, index) => {
-                                          // Render specific text based on the value of `service_needed`
-                                          let displayText = "";
-
-                                          switch (service_needed) {
-                                            case "Creams":
-                                              displayText = "Creams";
-                                              break;
-                                            case "Lipsticks":
-                                              displayText = "Lipsticks";
-                                              break;
-                                            case "Foundations":
-                                              displayText = "Foundations";
-                                              break;
-                                            case "Serums":
-                                              displayText = "Serums";
-                                              break;
-                                            case "Lotion":
-                                              displayText = "Lotion";
-                                              break;
-                                            case "others":
-                                              displayText = "Others";
-                                              break;
-                                            default:
-                                              displayText = "Unknown"; // Fallback text if needed
-                                          }
-
-                                          return (
-                                            <div
-                                              key={index}
-                                              className="flex items-center gap-[13px]"
-                                            >
-                                              <svg
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                                strokeWidth={1.5}
-                                                stroke="currentColor"
-                                                className="size-6"
-                                              >
-                                                <path
-                                                  strokeLinecap="round"
-                                                  strokeLinejoin="round"
-                                                  d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                                                />
-                                              </svg>
-                                              <ParagraphLink2 className="text-center font-bold">
-                                                {displayText}
-                                              </ParagraphLink2>
-                                            </div>
-                                          );
-                                        }
-                                      )}
-                                  </div>
-                                </div>
-                              </div>
-
-                              <div>
-                                <ParagraphLink2 className="  text-cente font-bold ">
-                                  Location{" "}
-                                </ParagraphLink2>
-                                <div className=" p-4 bg-white rounded-[12px]">
-                                  <p className=" ">
-                                    {selectedSubmission.location}
-                                  </p>
+                                  <Paragraph2 className=" ">
+                                    {selectedSubmission.companyName}
+                                  </Paragraph2>
                                 </div>
                               </div>
                             </div>
                           </div>{" "}
-                          <div className=" px-[30px] py-[39px] bg-bg_gray rounded-[15px] space-y-[40px]">
-                            <div>
-                              <ParagraphLink2 className="  text-cente font-bold ">
-                                Details/Message
-                              </ParagraphLink2>
-                              <div className=" p-4 bg-white rounded-[12px]">
-                                <p className=" ">
-                                  {selectedSubmission.productDetail}
-                                </p>
+                          {selectedSubmission.type !== "capital-Provider" && (
+                            <div className=" px-4 sm:px-[20px] py-[20px] bg-bg_gray rounded-[15px] space-y-[10px]">
+                              <div>
+                                <ParagraphLink2 className=" font-bold ">
+                                  Startup description
+                                </ParagraphLink2>
+                                <div className=" p-4 bg-white rounded-[12px]">
+                                  <p className=" ">
+                                    {selectedSubmission.description}
+                                  </p>
+                                </div>
                               </div>
-                            </div>
+                              <div>
+                                <ParagraphLink2 className=" font-bold ">
+                                  Startup sector
+                                </ParagraphLink2>
+                                <div className=" p-4 bg-white rounded-[12px]">
+                                  <Paragraph2 className=" capitalize ">
+                                    {selectedSubmission.sector}
+                                  </Paragraph2>
+                                </div>
+                              </div>
+                              <div>
+                                <ParagraphLink2 className=" font-bold ">
+                                  Startup Stage
+                                </ParagraphLink2>
+                                <div className=" p-4 bg-white rounded-[12px]">
+                                  <Paragraph2 className=" capitalize ">
+                                    {selectedSubmission.stage}
+                                  </Paragraph2>
+                                </div>
+                              </div>
 
-                            <div>
-                              <ParagraphLink2 className="  text-cente font-bold ">
-                                How Did You Hear About Us?
-                              </ParagraphLink2>
-                              <div className=" p-4 bg-white rounded-[12px]">
-                                <p className=" ">
-                                  {selectedSubmission.aboutushow}
-                                </p>
+                              <div>
+                                <ParagraphLink2 className=" font-bold ">
+                                  Raise in 3 months{" "}
+                                </ParagraphLink2>
+                                <div className=" p-4 bg-white rounded-[12px]">
+                                  <Paragraph2 className=" capitalize ">
+                                    {selectedSubmission.raisingIn3Months}
+                                  </Paragraph2>
+                                </div>
+                              </div>
+
+                              <div>
+                                <ParagraphLink2 className=" font-bold ">
+                                  Current Needs{" "}
+                                </ParagraphLink2>
+                                <div className=" p-4 bg-white rounded-[12px]">
+                                  <Paragraph2 className=" capitalize ">
+                                    {selectedSubmission.currentNeeds}
+                                  </Paragraph2>
+                                </div>
                               </div>
                             </div>
-                          </div>
+                          )}
+                          {selectedSubmission.type !== "startup" && (
+                            <div className=" px-4 sm:px-[20px] py-[20px] bg-bg_gray rounded-[15px] space-y-[10px]">
+                              <div>
+                                <ParagraphLink2 className=" font-bold ">
+                                  Company website
+                                </ParagraphLink2>
+                                <div className=" p-4 bg-white rounded-[12px]">
+                                  <p className=" ">
+                                    {selectedSubmission.website}
+                                  </p>
+                                </div>
+                              </div>
+                              <div>
+                                <ParagraphLink2 className=" font-bold ">
+                                  Contact Method
+                                </ParagraphLink2>
+                                <div className=" p-4 bg-white rounded-[12px]">
+                                  <Paragraph2 className=" capitalize ">
+                                    {selectedSubmission.contactMethod}
+                                  </Paragraph2>
+                                </div>
+                              </div>
+                              <div>
+                                <ParagraphLink2 className=" font-bold ">
+                                  Investment Focus
+                                </ParagraphLink2>
+                                <div className=" p-4 bg-white rounded-[12px]">
+                                  <Paragraph2 className=" capitalize ">
+                                    {selectedSubmission.investmentFocus}
+                                  </Paragraph2>
+                                </div>
+                              </div>
+                            </div>
+                          )}
                         </div>
                       </div>
                     ) : loading ? (
@@ -574,13 +533,15 @@ function NewSubmission() {
                                   {submission.initials}
                                 </span>
                               </div>
-                              <div className="flex-1 w-full overflow-hidden border-b pb-2">
+                              <div className="flex flex-col gap-2 w-full overflow-hidden border-b pb-2">
                                 <Paragraph1 className="text-[14px] font-semibold">
                                   {submission.name}
                                 </Paragraph1>
-
+                                <Paragraph2 className=" text-[14px] font-bold capitalize xl:-mt-2 truncate overflow-hidden whitespace-nowrap lg: max-w-[90%] -max-w-[300px]">
+                                  {submission.type}
+                                </Paragraph2>
                                 <Paragraph2 className=" text-[14px] xl:-mt-2 truncate overflow-hidden whitespace-nowrap lg: max-w-[90%] -max-w-[300px]">
-                                  {submission.productDetail}
+                                  {submission.description}
                                 </Paragraph2>
                               </div>
                             </div>

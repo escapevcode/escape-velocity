@@ -71,9 +71,9 @@ function BlogsSections() {
           )}
 
           <div>
-            <Header4>All Blogs</Header4>
+            <Header4>All Resources</Header4>
           </div>
-          <div className=" grid grid-cols-1 xl:grid-cols-3  sm:grid-cols-1 gap-[24px] xl:gap-[30px]">
+          <div className=" grid grid-cols-1 xl:grid-cols-5  gap-[14px] xl:gap-[20px]">
             {blogs.map((blog) => (
               <div key={blog.id}>
                 <BlogCard

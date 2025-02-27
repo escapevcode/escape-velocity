@@ -12,33 +12,13 @@ import React from "react";
 import AOS from "aos";
 
 interface Section3Props {
-  latestProducts: any;
-}
-interface Insight {
-  id: number;
-  title: string;
-  imageUrl: string;
+  latestBlogs: any;
 }
 
-const insightsData: Insight[] = [
-  {
-    id: 1,
-    title: "THE COMPENSATION MAP: AN AFRICAN INVESTMENT SALARIES REPORT 2025",
-    imageUrl: "/placeholder-image.jpg",
-  },
-  {
-    id: 2,
-    title: "THE COMPENSATION MAP: AN AFRICAN INVESTMENT SALARIES REPORT 2025",
-    imageUrl: "/placeholder-image.jpg",
-  },
-  {
-    id: 3,
-    title: "THE COMPENSATION MAP: AN AFRICAN INVESTMENT SALARIES REPORT 2025",
-    imageUrl: "/placeholder-image.jpg",
-  },
-];
 
-const Section3: React.FC<Section3Props> = ({ latestProducts }) => {
+
+
+const Section3: React.FC<Section3Props> = ({ latestBlogs }) => {
   React.useEffect(() => {
     AOS.init({
       duration: 1000,
@@ -57,21 +37,26 @@ const Section3: React.FC<Section3Props> = ({ latestProducts }) => {
           <Header3>Check our latest resources! </Header3>{" "}
         </div>
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-2 xl:gap-4">
-          {insightsData.map((insight) => (
+          {latestBlogs.map((blog: any, index: number) => (
             <div
-              key={insight.id}
+              key={blog.id}
               className="bg-white shadow-md rounded-[10px] p-[20px] border border-gray-200 "
             >
               <img
-                src={insight.imageUrl}
-                alt={insight.title}
+                src={blog.blogImageURL1.replace(
+                  "/upload/",
+                  "/upload/w_500,f_auto/"
+                )}
+                alt={blog.title}
                 className="w-full h-[200px] bg-gray-300 rounded-[10px]"
               />
-              <Paragraph1 className="text-lg font-semibold mt-4 text-p_green">
-                {insight.title}
+              <Paragraph1 className="text-lg uppercase font-semibold mt-4 text-p_green">
+                {blog.title}
               </Paragraph1>
               <Link
-                href={`/`}
+                href={`${blog.description}`}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="mt-4 px-4 py-2 border border-secondary flex w-fit gray-900 rounded-md hover:bg-black gray-900 hover:text-white transition"
               >
                 <Paragraph2>Learn more</Paragraph2>
