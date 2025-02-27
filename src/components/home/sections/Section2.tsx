@@ -5,6 +5,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { Header3, Paragraph2, Paragraph3 } from "@/components/Text";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 
 function Section2() {
@@ -96,9 +97,9 @@ function Section2() {
             </div>
           ))}
         </div>
-        <button className="xl:mt-6 mt-4 xl:px-[80px]  flex w-full xl:hidden justify-center items-center py-[15px] xl:py-[25px] border border-gray-500 rounded-[10px] text-black hover:bg-black hover:text-white">
+        <Link href="/contact-us" className="xl:mt-6 mt-4 xl:px-[80px]  flex w-full xl:hidden justify-center items-center py-[15px] xl:py-[25px] border border-gray-500 rounded-[10px] text-black hover:bg-black hover:text-white">
           <Paragraph3 className=" font-bold "> Get started</Paragraph3>
-        </button>
+        </Link>
       </div>
     </div>
   );

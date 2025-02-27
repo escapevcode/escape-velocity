@@ -41,7 +41,7 @@ const HomePage = () => {
 
             <div className="xl:py-[80px] py-[30px] flex w-full justify-center items-center">
               <Link
-                href="/products"
+                href="/contact-us"
                 className=" sm:px-[68px] px-[30px] py-[15px] text-[18px] w-full xl:w-fit hover:text-white hover:bg-black sm:py-[35px] sm:text-[24px] bg-l_green text-black rounded-[15px] "
               >
                 Work with us
