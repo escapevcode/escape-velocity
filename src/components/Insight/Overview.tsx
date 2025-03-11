@@ -56,7 +56,7 @@ function Insight() {
     >
       {loading && (
         <div className="absolute hidden inset-0 flex- items-center justify-center bg-white bg-opacity-50 z-50">
-          <div className="animate-spin rounded-full h-[100px] w-[100px] border-t-2 border-b-2 border-primary"></div>
+          {/* <div className="animate-spin rounded-full h-[20px] w-[20px] border-t-2 border-b-2 border-primary"></div> */}
         </div>
       )}
       <div className="container1 min-h-screen py-[154px] xl:py-[200px]  text-p_black">

@@ -112,7 +112,7 @@ function Footer() {
               <Paragraph2>Social Profiles</Paragraph2>
               <div className=" flex gap-2 items-center my-[14px]">
                 <Link
-                  href="https://www.instagram.com/grandiosegrin"
+                  href="#"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -174,7 +174,7 @@ function Footer() {
                   <Paragraph2>Social Profiles</Paragraph2>
                   <div className=" flex gap-2 items-center my-[14px]">
                     <Link
-                      href="https://www.instagram.com/grandiosegrin"
+                      href="#"
                       target="_blank"
                       rel="noopener noreferrer"
                     >

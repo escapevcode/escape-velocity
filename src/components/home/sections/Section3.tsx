@@ -20,7 +20,8 @@ const teamMembers = [
     name: "Ayobami Glory Olajide",
     image:
       "https://res.cloudinary.com/dipwsq5cg/image/upload/v1739267834/Mask_group_nvjagc.svg",
-    linkedin: "#",
+    linkedin:
+      "https://www.linkedin.com/in/theolajide?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
     shortBio:
       "Ayobami Glory Olajide is a venture capital professional who currently leads portfolio management and value creation for Nigeria's most impactful growth-stage companies, including Daystar Power (acquired by Shell), Moniepoint, Flutterwave, MAX, and LemFi, as a Senior Associate at Endeavor Nigeria.",
     fullBio:
@@ -28,10 +29,11 @@ const teamMembers = [
   },
   {
     id: 2,
-    name: "John Doe",
+    name: "Johnson Adebisi Chinedu",
     image:
       "https://res.cloudinary.com/dipwsq5cg/image/upload/v1739267834/Mask_group_1_bzz7ms.svg",
-    linkedin: "#",
+    linkedin:
+      "https://www.linkedin.com/in/madebyadebisi?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
     shortBio:
       "Johnson Adebisi Chinedu is an investment professional and product builder with extensive experience in early-stage startups and emerging markets. He has built products across Edtech, IoT, Travel, Transport tech, and developer tools, with a strong focus on the African ecosystem.",
     fullBio:
