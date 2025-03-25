@@ -61,9 +61,9 @@ function Section2() {
             pitch decks), identifying fit-for-purpose partners, and ongoing
             investor relations support.
           </Paragraph3>
-          <button className="mt-6 px-[80px] hidden xl:block py-[25px] border border-gray-500 rounded-[10px] text-black hover:bg-black hover:text-white">
+          <Link href="/contact-us" className="mt-6 px-[80px] w-fit hidden xl:block py-[25px] border border-gray-500 rounded-[10px] text-black hover:bg-black hover:text-white">
             <Paragraph3 className=" font-bold "> Get started</Paragraph3>
-          </button>
+          </Link>
         </div>
 
         {/* Right Side Accordion */}

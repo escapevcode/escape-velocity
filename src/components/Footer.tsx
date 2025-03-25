@@ -70,18 +70,6 @@ function Footer() {
                   Home
                 </ParagraphLink2>
               </Link>{" "}
-              <Link href="/about-us">
-                {" "}
-                <ParagraphLink2
-                  className={
-                    pathname === "/about-us"
-                      ? "text-[#ECECEC]- font-bold- "
-                      : " text-[#ECECEC]- "
-                  }
-                >
-                  Insight
-                </ParagraphLink2>
-              </Link>
               <Link href="/insight">
                 {" "}
                 <ParagraphLink2
@@ -91,14 +79,26 @@ function Footer() {
                       : " text-[#ECECEC]- "
                   }
                 >
-                  OTIK (Coming Soon)
+                  Insight
                 </ParagraphLink2>
               </Link>
-              <Link href="/resourcess">
+              <Link href="#">
                 {" "}
                 <ParagraphLink2
                   className={
-                    pathname === "/resourcess"
+                    pathname === "#"
+                      ? "text-[#ECECEC]- font-bold- "
+                      : " text-[#ECECEC]- "
+                  }
+                >
+                  OTIK (Coming Soon)
+                </ParagraphLink2>
+              </Link>
+              <Link href="/resources">
+                {" "}
+                <ParagraphLink2
+                  className={
+                    pathname === "/resources"
                       ? "text-[#ECECEC]- font-bold- "
                       : " text-[#ECECEC]- "
                   }
@@ -111,11 +111,7 @@ function Footer() {
             <div>
               <Paragraph2>Social Profiles</Paragraph2>
               <div className=" flex gap-2 items-center my-[14px]">
-                <Link
-                  href="#"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <Link href="#" target="_blank" rel="noopener noreferrer">
                   <img
                     src="https://res.cloudinary.com/dipwsq5cg/image/upload/v1739307164/Button_opw4ju.svg"
                     alt=""
@@ -151,13 +147,13 @@ function Footer() {
                   Home{" "}
                 </ParagraphLink2>
               </Link>
-              <Link href="/about-us">
+              <Link href="/insight">
                 {" "}
                 <ParagraphLink2 className=" text-[#ECECEC]-  ">
                   Insight{" "}
                 </ParagraphLink2>
               </Link>
-              <Link href="/insight">
+              <Link href="#">
                 {" "}
                 <ParagraphLink2 className=" text-[#ECECEC]- ">
                   OTIK (Coming Soon)
@@ -173,11 +169,7 @@ function Footer() {
                 <div>
                   <Paragraph2>Social Profiles</Paragraph2>
                   <div className=" flex gap-2 items-center my-[14px]">
-                    <Link
-                      href="#"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
+                    <Link href="#" target="_blank" rel="noopener noreferrer">
                       <img
                         src="https://res.cloudinary.com/dipwsq5cg/image/upload/v1739307164/Button_opw4ju.svg"
                         alt=""

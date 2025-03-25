@@ -8,6 +8,7 @@ import {
   Header5,
   Paragraph1,
   Paragraph2,
+  ParagraphLink1,
   ParagraphLink2,
 } from "@/components/Text";
 import React, { useState, useEffect } from "react";
@@ -21,6 +22,7 @@ import {
 } from "firebase/firestore"; // Firestore functions
 import AOS from "aos";
 import SearchBar from "../navBar/SearchBar";
+import EmailList from "./EmailList";
 
 type Submission = {
   id: string;
@@ -234,6 +236,8 @@ function NewSubmission() {
 
     return ` ${formattedDate}`;
   };
+  
+  const [showEmails, setShowEmails] = useState(false);
 
   return (
     <div className=" bg-bg_gray min-h-screen pb-[100px] text-[14px] sm:text-[14px] md:text-[16px] lg:text-[18px] xl:text-[19px] 2xl:text-[20px]">
@@ -462,6 +466,24 @@ function NewSubmission() {
                             // @ts-ignore
                             onSearchResults={setFilteredSubmissions}
                           />
+                          <div className=" relative">
+                            {" "}
+                            <button
+                              onClick={() => setShowEmails(!showEmails)}
+                              className="rounded-full px-4 py-4 border bg-white "
+                            >
+                              <ParagraphLink2 className=" text-center whitespace-nowrap">
+                                Newsletter List{" "}
+                              </ParagraphLink2>
+                            </button>{" "}
+                            <div>
+                              {showEmails && (
+                                <div className=" absolute top-[50px] z-10 sm:right-0 border overflow-hidden bg-white rounded-lg shadow">
+                                  <EmailList />
+                                </div>
+                              )}
+                            </div>
+                          </div>
                           <div className="relative">
                             <button onClick={toggleFilter}>
                               <svg
