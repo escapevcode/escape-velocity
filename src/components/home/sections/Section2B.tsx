@@ -60,7 +60,10 @@ function Section2B() {
             aligned startups, designing entrepreneur support programs, and
             offering market intelligence and due diligence services.
           </Paragraph3>
-          <Link href="/contact-us" className="mt-6 px-[80px] w-fit hidden xl:block py-[25px] border border-gray-500 rounded-[10px] text-black hover:bg-black hover:text-white">
+          <Link
+            href="https://calendly.com/bamiolajide/escape-velocity-30-mins-chat"
+            className="mt-6 px-[80px] w-fit hidden xl:block py-[25px] border border-gray-500 rounded-[10px] text-black hover:bg-black hover:text-white"
+          >
             <Paragraph3 className=" font-bold ">
               {" "}
               Book an appointment

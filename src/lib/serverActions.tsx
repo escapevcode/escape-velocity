@@ -9,8 +9,8 @@ export const sendEmail = async () => {
     name: "Escape Velocity",
     subject: "New Form Submission at Escape Velocity",
     body: compileWelcomeTemplate(
-      "Test",
-      "https://your-website.vercel.app/admin/dashboard"
+      "Escape Velocity",
+      "https://www.escapevelocity.africa/admin/dashboard"
     ),
   });
 };

@@ -95,7 +95,7 @@ function BlogsSections() {
                 onClick={() => setIsAddBlogOpen(!isAddBlogOpen)}
                 className="py-1 cursor-pointer"
               >
-                <ParagraphLink1>Create New Blog </ParagraphLink1>
+                <ParagraphLink1>Create New Resource </ParagraphLink1>
               </div>
             </div>
           )}{" "}
