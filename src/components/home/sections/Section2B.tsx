@@ -104,7 +104,7 @@ function Section2B() {
         </div>
 
         <Link
-          href="/contact-us"
+            href="https://calendly.com/bamiolajide/escape-velocity-30-mins-chat"
           className="xl:mt-6 mt-4 xl:px-[80px]  flex w-full xl:hidden justify-center items-center py-[15px] xl:py-[25px] border border-gray-500 rounded-[10px] text-black hover:bg-black hover:text-white"
         >
           <Paragraph3 className=" font-bold "> Book an appointment</Paragraph3>
