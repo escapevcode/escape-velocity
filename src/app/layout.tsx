@@ -7,6 +7,7 @@ import "aos/dist/aos.css";
 import Head from "next/head"; // Import Head for adding custom scripts
 import NetworkStatusChecker from "./NetworkStatusChecker";
 import { Toaster } from "react-hot-toast"; // Import Toaster
+import ApplicationError from "./ApplicationError";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -154,13 +155,15 @@ export default function RootLayout({
           }}
         />
       </Head>
-      <body className=" bg-[#f1efe8]-">
+      <body className=" bg-[#f1efe8]- ">
         <Toaster />
         {/* <NetworkStatusChecker /> */}
 
-        <Navbar />
+        <ApplicationError />
+
+        {/* <Navbar />
         {children}
-        <Footer />
+        <Footer /> */}
       </body>
     </html>
   );
