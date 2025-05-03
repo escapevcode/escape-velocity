@@ -4,7 +4,7 @@ const ApplicationError: React.FC = () => {
   return (
     <div
       style={{
-        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
+        fontFamily: "'Courier New', Courier, 'Lucida Console', monospace",
         backgroundColor: "#f8f8f8",
         color: "#333",
         padding: "40px",
