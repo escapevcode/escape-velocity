@@ -158,9 +158,7 @@ export default function RootLayout({
       <body className=" bg-[#f1efe8]- ">
         <Toaster />
         {/* <NetworkStatusChecker /> */}
-
         <ApplicationError />
-
         {/* <Navbar />
         {children}
         <Footer /> */}
